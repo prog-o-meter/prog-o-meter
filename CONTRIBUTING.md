@@ -15,9 +15,8 @@ If you look un the issues tab above, there will be a list of things to work on. 
 * If you do not find an issue, that you think is interesting, but you have an idea for something to work on, please add a new issue (see how below). If you know how to get started, just go ahead. If not, we will reply to your issue soon, and discuss how to get started on this task
 
 ### Get started
-When you know what you wanna work on, it is time to start. We use the github workflow (video description here: https://www.youtube.com/watch?v=PBI2Rz-ZOxU) (I will write up a more thorough explanation of this in the future)
-In the future, I intend to write guide specifically for prog-o-meter, but for know, check out this step-by-step tutorial by Jen Weber, on how to contribute (It assumes you have git installed, but it has link to a tutorial, if you dont)
-https://medium.com/@jenweber/your-first-open-source-contribution-a-step-by-step-technical-guide-d3aca55cc5a6
+When you know what you wanna work on, it is time to start. We use the github workflow (video description [here](https://www.youtube.com/watch?v=PBI2Rz-ZOxU) (I will write up a more thorough explanation of this in the future)
+In the future, I intend to write a guide specifically for prog-o-meter, but for now, check out [this step-by-step tutorial by Jen Weber](https://medium.com/@jenweber/your-first-open-source-contribution-a-step-by-step-technical-guide-d3aca55cc5a6), on how to contribute (It assumes you have git installed, but it has a link to a tutorial, if you don't)
 
 __NOTES:__
   * __STEP 3__: I am sorry the guide does not include any information on how to clone on Windows. I will try to find a guide as soon as possible.
@@ -31,7 +30,7 @@ No one is perfect! I am 100% sure you will find things in the current code, that
 
 An important part of keeping this project newbie friendly, is that we maintain good documentation. 
 A more thorough style guide will be produced as soon as possible, for now here are some guidelines. Also, check out existing code, or feel very free to ask, when you are not sure.
-* We document all functions, methods and classes with docstring (Suggested ressources: http://www.pythonforbeginners.com/basics/python-docstrings, https://www.pluralsight.com/guides/python/how-to-write-effective-docstrings)
+* We document all functions, methods and classes with docstring ([Python for beginners on docstrings](http://www.pythonforbeginners.com/basics/python-docstrings))
 * Contrary to some styleguides we do comment certain parts of code with inline comments. We comment all control flows, to make it easier for new programmers to understand existing code (#This is an inline comment) We put 8 spaces, before putting the inline comment
 * We comment if/elif/else-statements (give an explanation of the condition, and what happens if the block is executed)
 ```#python
@@ -46,7 +45,7 @@ A more thorough style guide will be produced as soon as possible, for now here a
   * We comment while-statement (give an explanation of the loop condition, and what happens inside the loop)
     Sorry, no current example - will add one as soon as possible
 * We give our variables, functions, classes, etc. good descriptive names (This is hard, and I very much appreciate any suggestions for changes of current names, that could be improved).
-  * We follow google's naming guidelines (https://google.github.io/styleguide/pyguide.html?showone=Naming#Naming)
+  * We follow [google's naming guidelines](https://google.github.io/styleguide/pyguide.html?showone=Naming#Naming)
 
 # How to in github:
 
@@ -63,7 +62,7 @@ A more thorough style guide will be produced as soon as possible, for now here a
 6. Be patient. I will get back to you as soon as I can!
 
 ## How to assign yourself to an issue
-  https://help.github.com/articles/assigning-issues-and-pull-requests-to-other-github-users/ (just assign your own username, to assign yourself)
+[Guide](https://help.github.com/articles/assigning-issues-and-pull-requests-to-other-github-users/ "github guide") Just assign your own username, to assign yourself.
   
  # Ressources
  We use Tkinter to build our graphical user interface (GUI) [Here](http://effbot.org/tkinterbook/tkinter-index.htm "An introducion to Tkinter") is documentation of Tkinter
