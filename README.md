@@ -35,7 +35,9 @@ Please note that this project is released with a Contributor Code of Conduct. By
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at progometer2018@gmail.com
 
 ### Contributers
+
 Linea (@lineaba)
+
 [Join us, and your name will be featured here!]
 
 
