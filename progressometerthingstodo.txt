@@ -1,9 +1,0 @@
-More stuff to do for the progress-o-meter:
-Should display the finishing date (which will be based on how many days left, so it will be adjusted if one day, no entry is made)
-Should include a button to directly inputting a number of days (of one/more have been forgotten, or too many have accidently been typed)
-Make "1 more day!"-button sit further up on a screen
-Handling all exeption cases, i.e. user says they have a name, but it does not exist, or user don't put in a name, etc.
-Make one of the radio-buttons be chosen by default
-Print motivational/encouraging quotes which prints when user pushes one more day button
-When user reaches day goal, it should first of all not be possible to click button anymore. It should also be celebrated with some animation
-Settings: Change colors, Change day goal from 100 to other thing number of days. 
