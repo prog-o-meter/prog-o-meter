@@ -5,6 +5,8 @@ The prog-o-meter is for tracking your progress during a #100DaysofCode challenge
 You get a nice graphic overview of how far you are in your challenge, since the prog-o-meter show completed days and remaining days.
 Currently, program only let's you track your progress in days, but we have plans for many new features, so stay tuned. 
 
+![prog-o-meter screenshot](https://user-images.githubusercontent.com/32916783/39079746-ba68340e-44d5-11e8-9665-95520b3b8ca8.JPG)
+
 ## Get involved
 The prog-o-meter was started as a project for me to work on during a #100DaysofCode challenge.
 I had been looking for open-source to contribute to, to get more experience with collaboration and git/github, but I found none that seemed right for me, and honestly, many of them looked too intimidating for me to even know where to start, and suddenly it hit me, why don't I just start a new project. One that assumes no prior experinece, one where we all start from scratch, and learn by doing, and help each other out, while working on an awesome project, that will feel relevant to new programmers.
