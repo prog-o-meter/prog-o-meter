@@ -15,7 +15,8 @@ If you look un the issues tab above, there will be a list of things to work on. 
 * If you do not find an issue, that you think is interesting, but you have an idea for something to work on, please add a new issue (see how below). If you know how to get started, just go ahead. If not, we will reply to your issue soon, and discuss how to get started on this task
 
 ### Get started
-When you know what you wanna work on, it is time to start. We use the github workflow (video description [here](https://www.youtube.com/watch?v=PBI2Rz-ZOxU) (I will write up a more thorough explanation of this in the future)
+When you know what you wanna work on, it is time to start. We use the github workflow (video description [here](https://www.youtube.com/watch?v=PBI2Rz-ZOxU)) I will write up a more thorough explanation of this in the future.
+
 In the future, I intend to write a guide specifically for prog-o-meter, but for now, check out [this step-by-step tutorial by Jen Weber](https://medium.com/@jenweber/your-first-open-source-contribution-a-step-by-step-technical-guide-d3aca55cc5a6), on how to contribute (It assumes you have git installed, but it has a link to a tutorial, if you don't)
 
 __NOTES:__
