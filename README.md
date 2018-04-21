@@ -16,7 +16,7 @@ The prog-o-meter is made for newbies by a newbie, and I really want you to join.
 If you feel just as overwhelmed as I did, when I was looking for open-source projects, __DO NOT WORRY__. Please open an issue (see how below) and give it as a title "Hi, my name is [your name]". In the comment, introduce yourself, tell me what you are interested in, and a bit about your experience, and I will help you find something to work on.
 
 ## Tech
-The current version of the prog-o-meter is build in Python and the GUI (graphical user interface) is created with Tkinter. You will probably need a little experience with Python before you can start contributing, but please do not feel you have to be a master. None of us are masters, and anything you have to contribute __IS VALUABLE__. Of course we want the prog-o-meter to be awesome, but more than anything, we want to have fun and help each other learn, and we need a diverse team to do that. 
+The current version of the prog-o-meter is build in Python 2 and the GUI (graphical user interface) is created with Tkinter. You will probably need a little experience with Python before you can start contributing, but please do not feel that you have to be a master. None of us are masters, and anything you have to contribute __IS VALUABLE__. Of course we want the prog-o-meter to be awesome, but more than anything, we want to have fun and help each other learn, and we need a diverse team to do that. 
 
 ## How to open an issue
 1. Right below the blue words lineaba/prog-o-meter, there is a menu line. Select the tab __Issues__ 
