@@ -1,5 +1,3 @@
-# Prog-o-meter
-
 ## About the Prog-o-meter
 The prog-o-meter is for tracking your progress during a #100DaysofCode challenge (or any other #100DaysofX challenge). 
 You get a graphic overview of how far you are in your challenge, since the prog-o-meter shows completed days and remaining days.
