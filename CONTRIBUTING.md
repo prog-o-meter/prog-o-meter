@@ -66,4 +66,4 @@ A more thorough style guide will be produced as soon as possible, for now here a
   https://help.github.com/articles/assigning-issues-and-pull-requests-to-other-github-users/ (just assign your own username, to assign yourself)
   
  # Ressources
- We use Tkinter to build our graphical user interface (GUI) (http://effbot.org/tkinterbook/tkinter-index.htm "here") is documentation of Tkinter
+ We use Tkinter to build our graphical user interface (GUI) [Here](http://effbot.org/tkinterbook/tkinter-index.htm "An introducion to Tkinter") is documentation of Tkinter
