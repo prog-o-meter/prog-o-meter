@@ -30,6 +30,10 @@ The current version of the prog-o-meter is build in Python and the GUI (graphica
 5. Click the green button __Submit new issue__
 6. Be patient. I will get back to you as soon as I can!
 
+## Code of Conduct
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms. To read the code of conduct, open file CODE_OF_CONDUCT.md.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at progometer2018@gmail.com
+
 ### Maintainers
 Lineaba
 ### Contributers
