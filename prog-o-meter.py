@@ -18,7 +18,7 @@ import Tkinter as Tk
 
 class ProgressGUI(object):
     
-    """Class contains all things related to the window displaying the progress-o-meter, including text, buttons and actions linked to buttons.
+    """Class contains all things related to the window displaying the prog-o-meter, including text, buttons and actions linked to buttons.
     
     Attributes:
         root: a tkinter root.
@@ -30,10 +30,10 @@ class ProgressGUI(object):
     """ 
     
     def __init__(self, _days, _filename, _username):
-        """Open a Tkinter window showing the progress-o-meter, a greeting text, and a button to add a new day to progress.
+        """Open a Tkinter window showing the prog-o-meter, a greeting text, and a button to add a new day to progress.
         
-        Opens a Tkinter window showing the progress-o-meter belonging to the user with the provided username.
-        Window contains a greetings text, a count of days untill goal, and the graphical progress-o-meter.
+        Opens a Tkinter window showing the prog-o-meter belonging to the user with the provided username.
+        Window contains a greetings text, a count of days untill goal, and the graphical prog-o-meter.
         Window contains a button, for user to add one new day to their progress. 
         
         Args:
@@ -51,7 +51,7 @@ class ProgressGUI(object):
         # Tkinter instantiation 
         self.canvas_layout()
         self.button_layout()
-        self.progress_o_meter()
+        self.prog_o_meter()
         self.progress()
         self.root.mainloop()
     def canvas_layout(self):
@@ -84,12 +84,12 @@ class ProgressGUI(object):
         self.add_day_button.pack()
         if self.days >= self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
-    def progress_o_meter(self):
-        """Display a progress-o-meter on the canvas. 
+    def prog_o_meter(self):
+        """Display a prog-o-meter on the canvas. 
         
         Displays a progess-o-meter made of white rectangles. There will be one rectangle pr. day in goal. Rectangles will be displayed right up against each other, making them appear as one long rectangles, with horizontal lines sectioning it. 
-        There will be 50 pixels from left edge of window to first rectangle in progress-o-meter, and 50 pixels from last rectangle to right edge of window.
-        Rectangles will be 20 pixels high, and their width will be the CANVAS_WIDTH, minus 100 pixels (distance from right+left edge of window to ends of progress-o-meter) divided by number of days in goal.
+        There will be 50 pixels from left edge of window to first rectangle in prog-o-meter, and 50 pixels from last rectangle to right edge of window.
+        Rectangles will be 20 pixels high, and their width will be the CANVAS_WIDTH, minus 100 pixels (distance from right+left edge of window to ends of prog-o-meter) divided by number of days in goal.
         """
         LEFT_BOUNDARY = 50
         RIGHT_BOUNDARY = 50
@@ -100,16 +100,16 @@ class ProgressGUI(object):
             self.rectangle_list.append(rectangle)
             LEFT_BOUNDARY += RECTANGLE_WIDENESS 
     def progress(self):
-        """Fill in rectangles in progress-o-meter, to represent the current progress of user.
+        """Fill in rectangles in prog-o-meter, to represent the current progress of user.
         
-        Fills in rectangles in progress-o-meter to represent the current progress of user, from left to right.
+        Fills in rectangles in prog-o-meter to represent the current progress of user, from left to right.
         Completed days will be filled out with a solid color (currently hardcoded to be blue).
         Remaining days will remain white.
         """
         for i in range(self.days):        # Color a rectangle pr. completed day blue (from left to right)
             self.canvas.itemconfig(self.rectangle_list[i], fill = "blue") 
     def add_day(self):
-        """Fill out one more rectangle in progress-o-meter with color, to represent one more day completed.
+        """Fill out one more rectangle in prog-o-meter with color, to represent one more day completed.
         
         Callback function to add_day_button. Fills out one more rectangle (most left-ward white rectangle) with color, to represent another day completed.
         Color will be diferent from current progress, to make the new day stand out.
@@ -160,7 +160,7 @@ class StartGUI(object):
         VERTICAL_TEXT_POSITION = 20
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
-        self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = "Hello, welcome to the progress-o-meter!")
+        self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = "Hello, welcome to the prog-o-meter!")
     def input_buttons(self):
         """Display the buttons on the canvas.
         
