@@ -160,7 +160,8 @@ class StartGUI(object):
         VERTICAL_TEXT_POSITION = 20
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
-        self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = "Hello, welcome to the progress-o-meter!")
+        self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, width = self.CANVAS_WIDTH - 20, justify = Tk.CENTER, text = "Hello,\nwelcome to the progress-o-meter!")
+
     def input_buttons(self):
         """Display the buttons on the canvas.
         
