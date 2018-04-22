@@ -21,7 +21,7 @@ In the future, I intend to write a guide specifically for prog-o-meter, but for 
 
 __NOTES:__
   * __STEP 3__: I am sorry the guide does not include any information on how to clone on Windows. I will try to find a guide as soon as possible.
-  * __STEP 5__: The prog-o-meter is a VERY simple program, so the only dependency you may need would be python-tk. However, you do need to have Python 2.7 installed on your computer. (And Tkinter, but this is almost always included with Python)
+  * __STEP 5__: The prog-o-meter is a VERY simple program written in Python 2.7, so you will need to have that installed.  Tkinter is included with most python installations, but if it isn't compiling/running when you download this, you can follow the instructions [here](http://www.tkdocs.com/tutorial/install.html) to get up and running.
   * __STEP 7__: We do not currently have any tests, so for now ignore this step. (If you are interested in working on writing tests, please let me now).
   
 ### Commenting your code
