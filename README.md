@@ -39,7 +39,9 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be repor
 ### Contributors
 
 Linea (@lineaba)
+
 @elheffe80
+
 @garroadran
 
 [Join us, and your name will be featured here!]
