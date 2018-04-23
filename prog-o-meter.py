@@ -14,7 +14,10 @@ __version__ = "1.0.0"
 __license__ = "MIT"
 
 
-import Tkinter as Tk
+try:
+    import Tkinter as Tk        # Python < 3.0
+except ImportError:
+    import tkinter as Tk        # Python >= 3.0
 
 class ProgressGUI(object):
     
