@@ -44,7 +44,7 @@ Linea (@lineaba)
 
 @garroadran
 
-@B-souty
+@B-Souty
 
 [Join us, and your name will be featured here!]
 
