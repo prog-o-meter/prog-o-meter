@@ -111,6 +111,25 @@ class ProgressGUI(object):
         """
         for i in range(self.days):        # Color a rectangle pr. completed day blue (from left to right)
             self.canvas.itemconfig(self.rectangle_list[i], fill = "blue") 
+    def get_completion_date(self,days_remaining):
+        """Calculate the date at which the challenge will be over.
+
+        Args:
+            days_remaining: number of days remaining in the project
+
+        Returns:
+            The project completion date as a string
+        """
+        
+        today = datetime.date.today()
+        completion_date = today + datetime.timedelta(days=days_remaining)
+
+        if 4 <= completion_date.day <= 20 or 24 <= completion_date.day <= 30:
+            suffix = "th"
+        else:
+            suffix = ["st", "nd", "rd"][completion_date.day % 10 - 1]
+
+        return datetime.date.strftime(completion_date, "%B %-d{0}, %Y".format(suffix))
     def add_day(self):
         """Fill out one more rectangle in progress-o-meter with color, to represent one more day completed.
         
@@ -282,26 +301,6 @@ def read_days_file(_filename):
     days = days_text.read()
     days_text.close() 
     return days
-
-def get_completion_date(days_remaining):
-    """Calculate the date at which the challenge will be over.
-
-    Args:
-        days_remaining: number of days remaining in the project
-
-    Returns:
-        The project completion date as a string
-    """
-    
-    today = datetime.date.today()
-    completion_date = today + datetime.timedelta(days=days_remaining)
-
-    if 4 <= completion_date.day <= 20 or 24 <= completion_date.day <= 30:
-        suffix = "th"
-    else:
-        suffix = ["st", "nd", "rd"][completion_date.day % 10 - 1]
-
-    return datetime.date.strftime(completion_date, "%B %-d{0}, %Y".format(suffix))
 
 def main():
     """Mainroutine to run the prog-o-meter program.
