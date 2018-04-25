@@ -50,7 +50,7 @@ class ProgressGUI(object):
         self.GOAL = 100
         self.rectangle_list = []
         self.days_remaining = self.GOAL - self.days
-        self.completion_date = self.get_completion_date(self.days_remaining)
+        self.completion_date = self.get_completion_date(self.days_remaining-1)
         # Tkinter instantiation 
         self.canvas_layout()
         self.button_layout()
@@ -137,9 +137,9 @@ class ProgressGUI(object):
         Color will be diferent from current progress, to make the new day stand out.
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
         """
+        self.days += 1
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining)
-        self.days += 1
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
         update_days_file(self.filename, self.days)
         self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
