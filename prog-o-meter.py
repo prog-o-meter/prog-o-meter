@@ -124,9 +124,9 @@ class ProgressGUI(object):
         today = datetime.date.today()
         completion_date = today + datetime.timedelta(days=days_remaining)
 
-        if 4 <= completion_date.day <= 20 or 24 <= completion_date.day <= 30:
+        if 4 <= completion_date.day <= 20 or 24 <= completion_date.day <= 30:       # Set the suffix for the day to 'th' if it is between 4 and 20 or between 24 and 30
             suffix = "th"
-        else:
+        else:       # Otherwise, set the suffix for the day to 'st', 'nd' or 'rd' when the day ends with 1, 2 or 3 respectively.
             suffix = ["st", "nd", "rd"][completion_date.day % 10 - 1]
 
         return datetime.date.strftime(completion_date, "%B %-d{0}, %Y".format(suffix))
