@@ -284,7 +284,15 @@ def read_days_file(_filename):
     return days
 
 def get_completion_date(days_remaining):
+    """Calculate the date at which the challenge will be over.
 
+    Args:
+        days_remaining: number of days remaining in the project
+
+    Returns:
+        The project completion date as a string
+    """
+    
     today = datetime.date.today()
     completion_date = today + datetime.timedelta(days=days_remaining)
 
