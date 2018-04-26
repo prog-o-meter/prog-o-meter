@@ -15,6 +15,7 @@ __license__ = "MIT"
 
 
 import Tkinter as Tk
+import datetime
 
 class ProgressGUI(object):
     
@@ -48,6 +49,8 @@ class ProgressGUI(object):
         self.days = _days
         self.GOAL = 100
         self.rectangle_list = []
+        self.days_remaining = self.GOAL - self.days
+        self.completion_date = get_completion_date(self.days_remaining)
         # Tkinter instantiation 
         self.canvas_layout()
         self.button_layout()
@@ -71,7 +74,7 @@ class ProgressGUI(object):
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
         self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = ("".join(("Hello ", self.username))))
-        self.countdown_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+20, text = "".join(("You have ", str(self.GOAL-self.days), " days left!")))
+        self.countdown_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
     def button_layout(self):
         """Display a button with the text "1 more day!" on the canvas.
         
@@ -115,10 +118,12 @@ class ProgressGUI(object):
         Color will be diferent from current progress, to make the new day stand out.
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
         """
+        self.days_remaining = self.GOAL - self.days
+        self.completion_date = get_completion_date(self.days_remaining)
         self.days += 1
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
         update_days_file(self.filename, self.days)
-        self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.GOAL-self.days), " days left!")))
+        self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
         if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached 
             self.add_day_button.config(state = "disabled")             
 
@@ -277,6 +282,18 @@ def read_days_file(_filename):
     days = days_text.read()
     days_text.close() 
     return days
+
+def get_completion_date(days_remaining):
+
+    today = datetime.date.today()
+    completion_date = today + datetime.timedelta(days=days_remaining)
+
+    if 4 <= completion_date.day <= 20 or 24 <= completion_date.day <= 30:
+        suffix = "th"
+    else:
+        suffix = ["st", "nd", "rd"][completion_date.day % 10 - 1]
+
+    return datetime.date.strftime(completion_date, "%B %-d{0}, %Y".format(suffix))
 
 def main():
     """Mainroutine to run the prog-o-meter program.
