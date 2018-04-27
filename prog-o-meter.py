@@ -168,7 +168,8 @@ class StartGUI(object):
     def input_buttons(self):
         """Display the buttons on the canvas.
         
-        Dispays a set of two radio buttons, for the user to indicate whether they are a new or returning user. 
+        Displays a set of two radio buttons, for the user to indicate whether they are a new
+        or returning user. Window closes when user clicks one of the buttons.
         """
         Tk.Radiobutton(self.root, text = "I already have a meter", variable = self.choice, value = 1, command = self.close_window, indicatoron = 0).pack(pady = 5)
         Tk.Radiobutton(self.root, text = "I don't have a meter yet", variable = self.choice, value = 2, command = self.close_window, indicatoron = 0).pack(pady = 5)
