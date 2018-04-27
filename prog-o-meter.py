@@ -252,6 +252,7 @@ class UsernameGUI(object):
         self.canvas.pack()
         self.text_entry = Tk.Entry(self.root)
         self.text_entry.pack()
+        self.text_entry.focus_set()
         if self.user_type == 1:        # Display appropriate greeting for returning users
             self.canvas.create_text(self.CANVAS_WIDTH/2, 20, text = "Good to see you again! Please enter your name")
         elif self.user_type == 2:        # Display appropriate greeting for new users
