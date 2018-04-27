@@ -111,7 +111,7 @@ class ProgressGUI(object):
         """
         for i in range(self.days):        # Color a rectangle pr. completed day blue (from left to right)
             self.canvas.itemconfig(self.rectangle_list[i], fill = "blue") 
-    def get_completion_date(self,days_remaining):
+    def get_completion_date(self, days_remaining):
         """Calculate the date at which the challenge will be over.
 
         Args:
