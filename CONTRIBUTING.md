@@ -6,13 +6,13 @@ If you find something that you think needs more explaining, please point it out,
 
 ### Try to use the prog-o-meter program
 The first thing to do, would be opening the program and trying it out, so you know how it feels to use.
-Check out the file USER_GUIDE.md for instructions on how to download and use the program
+Check out the file USER_GUIDE.md(still a work in progress) for instructions on how to download and use the program.
 
 ### Find out what you wanna work on
-If you look un the issues tab above, there will be a list of things to work on. Look through them, and see if anything catches your eye.
+If you look in the issues tab above, there will be a list of things to work on. Look through them, and see if anything catches your eye.
 * If you find an issue that you think is interesting, but you aren't excactly sure how to get started, please leave a comment on the issue, and we can communicate on how to get started.
 * If you find an issue that you think is interesting, and you know how to get started, please leave a comment, stating that you will be working on this, and assign yourself to the issue 
-* If you do not find an issue, that you think is interesting, but you have an idea for something to work on, please add a new issue (see how below). If you know how to get started, just go ahead. If not, we will reply to your issue soon, and discuss how to get started on this task
+* If you have an idea for something to work on please add a new issue (see how below). If you know how to get started, just go ahead. If not, we will reply to your issue soon, and discuss how to get started on this task
 
 ### Get started
 When you know what you wanna work on, it is time to start. We use the github workflow (video description [here](https://www.youtube.com/watch?v=PBI2Rz-ZOxU)) I will write up a more thorough explanation of this in the future.
@@ -21,7 +21,7 @@ In the future, I intend to write a guide specifically for prog-o-meter, but for 
 
 __NOTES:__
   * __STEP 3__: I am sorry the guide does not include any information on how to clone on Windows. I will try to find a guide as soon as possible.
-  * __STEP 5__: The prog-o-meter is a VERY simple program, and no dependencies are needed. However, you do need to have Python installed on your computer. (And Tkinter, but this is almost always included with Python)
+  * __STEP 5__: The prog-o-meter is a VERY simple program written in Python 2.7, so you will need to have that installed.  Tkinter is included with most python installations, but if it isn't compiling/running when you download this, you can follow the instructions [here](http://www.tkdocs.com/tutorial/install.html) to get up and running.
   * __STEP 7__: We do not currently have any tests, so for now ignore this step. (If you are interested in working on writing tests, please let me now).
   
 ### Commenting your code
