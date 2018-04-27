@@ -118,6 +118,7 @@ class ProgressGUI(object):
         Color will be diferent from current progress, to make the new day stand out.
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
         """
+        self.progress()
         self.days += 1
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
         update_days_file(self.filename, self.days)
