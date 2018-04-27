@@ -148,7 +148,7 @@ class StartGUI(object):
         self.canvas_layout()
         self.input_buttons()
         self.root.mainloop()
-        print self.choice
+
     def canvas_layout(self):
         """Display a Tkinter canvas.
         
@@ -282,7 +282,6 @@ def main():
     Opens a new window, which lets the user type their name.
     Opens a new window, which shows the user's progress, and how many days remains of the challenge.
     """
-    user_state = 0
     start_screen = StartGUI()
     user_state = start_screen.get_state()
     name_screen = UsernameGUI(user_state)
