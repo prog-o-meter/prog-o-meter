@@ -13,7 +13,7 @@ __authour__ = "Linea Brink Andersen"
 __version__ = "1.0.0"
 __license__ = "MIT"
 
-
+import datetime
 try:
     import Tkinter as Tk        # Python < 3.0
 except ImportError:
@@ -51,6 +51,8 @@ class ProgressGUI(object):
         self.days = _days
         self.GOAL = 100
         self.rectangle_list = []
+        self.days_remaining = self.GOAL - self.days
+        self.completion_date = self.get_completion_date(self.days_remaining-1)
         # Tkinter instantiation 
         self.canvas_layout()
         self.button_layout()
@@ -74,7 +76,7 @@ class ProgressGUI(object):
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
         self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = ("".join(("Hello ", self.username))))
-        self.countdown_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+20, text = "".join(("You have ", str(self.GOAL-self.days), " days left!")))
+        self.countdown_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
     def button_layout(self):
         """Display a button with the text "1 more day!" on the canvas.
         
@@ -111,6 +113,25 @@ class ProgressGUI(object):
         """
         for i in range(self.days):        # Color a rectangle pr. completed day blue (from left to right)
             self.canvas.itemconfig(self.rectangle_list[i], fill = "blue") 
+    def get_completion_date(self, days_remaining):
+        """Calculate the date at which the challenge will be over.
+
+        Args:
+            days_remaining: number of days remaining in the project
+
+        Returns:
+            The project completion date as a string
+        """
+        
+        today = datetime.date.today()
+        completion_date = today + datetime.timedelta(days=days_remaining)
+
+        if 4 <= completion_date.day <= 20 or 24 <= completion_date.day <= 30:       # Set the suffix for the day to 'th' if it is between 4 and 20 or between 24 and 30
+            suffix = "th"
+        else:       # Otherwise, set the suffix for the day to 'st', 'nd' or 'rd' when the day ends with 1, 2 or 3 respectively.
+            suffix = ["st", "nd", "rd"][completion_date.day % 10 - 1]
+
+        return datetime.date.strftime(completion_date, "%B %-d{0}, %Y".format(suffix))
     def add_day(self):
         """Fill out one more rectangle in prog-o-meter with color, to represent one more day completed.
         
@@ -119,9 +140,11 @@ class ProgressGUI(object):
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
         """
         self.days += 1
+        self.days_remaining = self.GOAL - self.days
+        self.completion_date = self.get_completion_date(self.days_remaining)
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
         update_days_file(self.filename, self.days)
-        self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.GOAL-self.days), " days left!")))
+        self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
         if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached 
             self.add_day_button.config(state = "disabled")             
 
@@ -164,6 +187,7 @@ class StartGUI(object):
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
         self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = "Hello, welcome to the prog-o-meter!")
+
     def input_buttons(self):
         """Display the buttons on the canvas.
         
