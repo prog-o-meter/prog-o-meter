@@ -131,7 +131,7 @@ class ProgressGUI(object):
         else:       # Otherwise, set the suffix for the day to 'st', 'nd' or 'rd' when the day ends with 1, 2 or 3 respectively.
             suffix = ["st", "nd", "rd"][completion_date.day % 10 - 1]
 
-        return datetime.date.strftime(completion_date, "%B %-d{0}, %Y".format(suffix))
+        return datetime.date.strftime(completion_date, "%B %d{0}, %Y".format(suffix))
     def add_day(self):
         """Fill out one more rectangle in prog-o-meter with color, to represent one more day completed.
         
