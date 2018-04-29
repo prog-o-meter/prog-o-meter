@@ -252,6 +252,7 @@ class UsernameGUI(object):
         self.canvas.pack()
         self.text_entry = Tk.Entry(self.root)
         self.text_entry.pack()
+        self.text_entry.focus_force()
         if self.user_type == 1:        # Display appropriate greeting for returning users
             self.canvas.create_text(self.CANVAS_WIDTH/2, 20, text = "Good to see you again! Please enter your name")
         elif self.user_type == 2:        # Display appropriate greeting for new users
@@ -267,7 +268,8 @@ class UsernameGUI(object):
         """
         self.submit_button = Tk.Button(self.root, text = "Submit", command = self.save_and_close)
         self.submit_button.pack()
-    def save_and_close(self):
+        self.root.bind('<Return>', self.save_and_close)
+    def save_and_close(self, event=None):
         """Save input text as username, then close Tkinter window. """
         self.username = self.text_entry.get()
         self.root.destroy()
