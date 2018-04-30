@@ -194,9 +194,13 @@ class StartGUI(object):
         
         Displays a set of two radio buttons, for the user to indicate whether they are a new
         or returning user. Window closes when user clicks one of the buttons.
+
+        Attributes:
+            BTTN_WIDTH: The width of the radiobuttons is hardcoded to 18 text units.
         """
-        Tk.Radiobutton(self.root, text = "I already have a meter", variable = self.choice, value = 1, command = self.close_window, indicatoron = 0).pack(pady = 5)
-        Tk.Radiobutton(self.root, text = "I don't have a meter yet", variable = self.choice, value = 2, command = self.close_window, indicatoron = 0).pack(pady = 5)
+        BTTN_WIDTH = 18 
+        Tk.Radiobutton(self.root, text = "I already have a meter", variable = self.choice, value = 1, command = self.close_window, indicatoron = 0, width = BTTN_WIDTH).pack(pady = 5)
+        Tk.Radiobutton(self.root, text = "I don't have a meter yet", variable = self.choice, value = 2, command = self.close_window, indicatoron = 0, width = BTTN_WIDTH).pack(pady = 5)
     def close_window(self):
         """Close the Tkinter window."""
         self.root.destroy()
