@@ -7,9 +7,9 @@ except ImportError:
     import tkinter as Tk        # Python >= 3.0
 
 class Congratulations(object):
-    """Represents the completion of the goal. Houses functionality
-    for displaying a congratulatory message and prompting the user
-    for further action.
+    """Displays a dialog congratulating the user for completing the challenge.
+
+    Allows the user to tweet about their accomplishment.
 
     TO DO:
         Allow the user to start up a new goal.    
@@ -22,6 +22,7 @@ class Congratulations(object):
         self.root = Tk.Toplevel()
         self.root.title("Congratulations!")
         self.challenge_duration = 100        # Set this manually for now. Pass it in as an argument later.
+        self.challenge_hashtag = "#100DaysOfCode"
 
         CANVAS_WIDTH = 300
         CANVAS_HEIGHT = 200
@@ -46,7 +47,10 @@ class Congratulations(object):
     
     def open_twitter_browser(self):
         """Opens a new browser tab to the Twitter page for creating a tweet.
+
         Pre-populates the tweet with a stock message.
         """
-        msg = quote("I just completed my " + str(self.challenge_duration) + "-days challenge!")
+        msg = quote("I just completed my " + str(self.challenge_duration) + "-days challenge! "+ self.challenge_hashtag)
+        print(self.challenge_hashtag)
+        print(msg)
         webbrowser.open_new_tab("https://twitter.com/intent/tweet?text=" + msg)
