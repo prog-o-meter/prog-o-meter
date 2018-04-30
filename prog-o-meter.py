@@ -18,6 +18,8 @@ try:
     import Tkinter as Tk        # Python < 3.0
 except ImportError:
     import tkinter as Tk        # Python >= 3.0
+from congratulations.Congratulations import Congratulations
+
 
 class ProgressGUI(object):
     
@@ -145,8 +147,9 @@ class ProgressGUI(object):
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
         update_days_file(self.filename, self.days)
         self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
-        if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached 
-            self.add_day_button.config(state = "disabled")             
+        if self.days >=self.GOAL:        # Disable add_day_button and show congratulatory dialog if goal has been reached,
+            self.add_day_button.config(state = "disabled")
+            Congratulations()        # Open congratulations window with link to share on Twitter
 
 class StartGUI(object):
    
