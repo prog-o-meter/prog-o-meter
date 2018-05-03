@@ -154,19 +154,19 @@ class ProgressGUI(object):
         if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached 
             self.add_day_button.config(state = "disabled")  
     def log_entry(self):
-        """Opens a new window for user to make a new log entry. The user can make any number of entries he/she wishes.
+        """Opens a new window for user to make a new log entry. The user can make any number of entries they wish.
 
         Callback function to add_log_button. Opens a new toplevel window with a text widget and three buttons:
         A button marked "Save" that saves the text the user typed into the widget to the [USERNAME]_log.txt file.
         A button marked "Clear" that clears the text that the user typed into the widget.
         A button marked "Close" that closes the toplevel window.
         """
-        t = Tk.Toplevel(self.root)
+        log_window = Tk.Toplevel(self.root)
 
-        t.title("Write your log entry here:")
+        log_window.title("Write your log entry here:")
 
-        scroll_bar = Tk.Scrollbar(t)         #A vertical scroll bar for user's convenience
-        text_box = Tk.Text(t, height=10, width=50)
+        scroll_bar = Tk.Scrollbar(log_window)         #A vertical scroll bar for user's convenience
+        text_box = Tk.Text(log_window, height=10, width=50)
 
         scroll_bar.pack(side=Tk.RIGHT, fill=Tk.Y)
         text_box.pack(fill=Tk.Y)
@@ -178,9 +178,9 @@ class ProgressGUI(object):
             input_value = text_box.get("1.0",'end-1c')
             update_log_file(self.logname, input_value)
 
-        save = Tk.Button(t, height=1, width=10, text='Save', command=lambda: update_log())
-        clear = Tk.Button(t, height=1, width=10, text='Clear', command=lambda: text_box.delete('1.0', Tk.END))
-        close = Tk.Button(t, height=1, width=10, text='Close', command=lambda: t.destroy())
+        save = Tk.Button(log_window, height=1, width=10, text='Save', command=lambda: update_log())
+        clear = Tk.Button(log_window, height=1, width=10, text='Clear', command=lambda: text_box.delete('1.0', Tk.END))
+        close = Tk.Button(log_window, height=1, width=10, text='Close', command=lambda: log_window.destroy())
 
         save.pack(side=Tk.LEFT, expand=True)
         clear.pack(side=Tk.LEFT, expand=True)
@@ -354,11 +354,9 @@ def update_log_file(_logname, _log_entry):
         _log_entry: The text which is to be appended to the file.
     """
 
-    import time       #Should the time module be imported inside this function, or globally???
-
     log_text = open(_logname, "a")
     log_text.write("\n"
-    + str(time.asctime()) + "\n"
+    + str(datetime.datetime.now()) + "\n"
     "\n"
     + str(_log_entry) + "\n")
     log_text.close()
@@ -381,7 +379,7 @@ def main():
         open(logname, 'w').close()        #Make a new log file for a new user
     days = read_days_file(filename)
     days = int(days)
-    ProgressGUI(days, filename, username)
+    ProgressGUI(days, filename, logname, username)
     
     
 if __name__ == '__main__':
