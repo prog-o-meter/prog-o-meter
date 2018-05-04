@@ -18,6 +18,7 @@ try:
     import Tkinter as Tk        # Python < 3.0
 except ImportError:
     import tkinter as Tk        # Python >= 3.0
+from User import User
 
 class ProgressGUI(object):
     
@@ -25,14 +26,14 @@ class ProgressGUI(object):
     
     Attributes:
         root: a tkinter root.
-        filename: the name of the .txt file storing the user's number of days.
+        user: an object representing the user
         username: the name of the user.
         days: the number of days the user have completed.
         GOAL: The number of days the user is trying to complete (hardcoded to be 100, but might wanna add feature for user to chooses this themselves in the future).
         rectagle_list = a list of all rectangle elements to be displayed on canvas.
     """ 
     
-    def __init__(self, _days, _filename, _username):
+    def __init__(self, user):
         """Open a Tkinter window showing the prog-o-meter, a greeting text, and a button to add a new day to progress.
         
         Opens a Tkinter window showing the prog-o-meter belonging to the user with the provided username.
@@ -40,16 +41,13 @@ class ProgressGUI(object):
         Window contains a button, for user to add one new day to their progress. 
         
         Args:
-            _days: number of days currently completed by the user
-            _filename: name of file storing user's progress
-            _username: name of user
+            user: an object representing the logged-in user
         """
         # Attributes
         self.root = Tk.Tk()
-        self.filename = _filename
-        self.username = _username
-        self.days = _days
-        self.GOAL = 100
+        self.user = user
+        self.username = user.getName()
+        (self.days, self.GOAL) = user.getProgress()
         self.rectangle_list = []
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining-1)
@@ -139,11 +137,11 @@ class ProgressGUI(object):
         Color will be diferent from current progress, to make the new day stand out.
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
         """
+        self.user.addDays(1)
         self.days += 1
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining)
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
-        update_days_file(self.filename, self.days)
         self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
         if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached 
             self.add_day_button.config(state = "disabled")             
@@ -280,31 +278,6 @@ class UsernameGUI(object):
     def get_name(self):
         """Return the username. """
         return self.username
-            
-def update_days_file(_filename, _days):
-    """Update the file [username].txt, with the current number of days completed.
-    
-    Args:
-        _filename: Name of the file to be updated. Should have format [username].txt (username in all lowercase).
-        _days: the current number of days completed
-    """
-    days_text = open(_filename, "w")
-    days_text.write(str(_days))
-    days_text.close()
-  
-def read_days_file(_filename):
-    """Read the file [username].txt, to retrieve the number of days completed, from last use.
-    
-    Args:
-        _filename: Name of the file to be read. Should have format [username].txt (username in all lowercase).
-    
-    Returns:
-        Number of days completed
-    """
-    days_text = open(_filename, "r")
-    days = days_text.read()
-    days_text.close() 
-    return days
 
 def main():
     """Mainroutine to run the prog-o-meter program.
@@ -317,12 +290,8 @@ def main():
     user_state = start_screen.get_state()
     name_screen = UsernameGUI(user_state)
     username = name_screen.get_name()
-    filename = "".join((username.lower(), ".txt"))
-    if user_state == 2:        #Make a new file for a new user, and set their current progress to 0 days
-        update_days_file(filename, "0")
-    days = read_days_file(filename)
-    days = int(days)
-    ProgressGUI(days, filename, username)
+    user = User(username, user_state == 2)
+    ProgressGUI(user)
     
     
 if __name__ == '__main__':
