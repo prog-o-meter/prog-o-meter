@@ -7,6 +7,9 @@ Currently, the prog-o-meter only let's you track your progress in days, but ther
 
 ![prog-o-meter screenshot](https://user-images.githubusercontent.com/32916783/39079746-ba68340e-44d5-11e8-9665-95520b3b8ca8.JPG)
 
+## Use the Prog-o-meter
+The prog-o-meter is available for anyone to use. Check out [this guide](prog-o-meter/user_guide.md) on how to download the program, and get started.
+
 ## Get involved
 The prog-o-meter was started as a project for me to work on during a #100DaysofCode challenge.
 I had been looking for an open-source project to contribute to, to get more experience with collaboration and git/github, but I found none that seemed right for me, and honestly, many of them looked too intimidating for me to even know where to start.
