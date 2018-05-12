@@ -159,9 +159,7 @@ class ProgressGUI(object):
             self.add_day_button.config(state = "disabled")
             self.canvas.itemconfig(self.greeting, text=("".join(("Congrats! ", self.username))))
     def new_no(self, current_greeting):
-        """Display a Tkinter canvas.
-
-            Allows to choose a new encouragement from the list each time the button is clicked so that the encouragements are not repeated.
+        """Allows to choose a new encouragement from the list each time the button is clicked so that the encouragements are not repeated.
 
             Attributes:
             current_greeting: A flag attribute that stores the previous value of the encouragement index chosen so that it does not conflict with the new one.
