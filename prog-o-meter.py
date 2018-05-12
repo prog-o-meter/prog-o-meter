@@ -55,7 +55,7 @@ class ProgressGUI(object):
         self.encourage = ["Nice Job!", "The force is strong with you!", "Well Done!", "You are doing it!", "Never, never, never give up.", "If you dream it, you can do it.", "Everything you can imagine is real.", "Hope is a waking dream.", "You are the best!", "Always believe in yourself."]
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining-1)
-        self.x = 0
+        self.current_greeting = 0
         # Tkinter instantiation
         self.canvas_layout()
         self.button_layout()
@@ -78,9 +78,9 @@ class ProgressGUI(object):
         VERTICAL_TEXT_POSITION = 100
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
-        self.hog = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = ("".join(("Hello ", self.username))))
+        self.greeting = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = ("".join(("Hello ", self.username))))
         self.countdown_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
-        self.encourage_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "".join(self.encourage[self.new_no(self.x)]))
+        self.encourage_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "")
 
     def button_layout(self):
         """Display a button with the text "1 more day!" on the canvas.
@@ -94,7 +94,7 @@ class ProgressGUI(object):
         self.add_day_button.pack()
         if self.days >= self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
-            self.canvas.itemconfig(self.hog, text=("".join(("Congrats! ", self.username))))
+            self.canvas.itemconfig(self.greeting, text=("".join(("Congrats! ", self.username))))
 
     def prog_o_meter(self):
         """Display a prog-o-meter on the canvas.
@@ -111,6 +111,8 @@ class ProgressGUI(object):
             rectangle = self.canvas.create_rectangle(LEFT_BOUNDARY, self.CANVAS_HEIGHT/2, LEFT_BOUNDARY+RECTANGLE_WIDENESS, (self.CANVAS_HEIGHT/2)+RECTANGLE_HEIGHT, fill = "white")
             self.rectangle_list.append(rectangle)
             LEFT_BOUNDARY += RECTANGLE_WIDENESS
+        VERTICAL_TEXT_POSITION = 425
+        self.encourage_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "")
     def progress(self):
         """Fill in rectangles in prog-o-meter, to represent the current progress of user.
 
@@ -150,18 +152,26 @@ class ProgressGUI(object):
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining)
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
-        self.canvas.itemconfig(self.encourage_text, text = "".join(self.encourage[self.new_no(self.x)]))
+        self.canvas.itemconfig(self.encourage_text, text = "".join(self.encourage[self.new_no(self.current_greeting)]))
         update_days_file(self.filename, self.days)
         self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
         if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
-            self.canvas.itemconfig(self.hog, text=("".join(("Congrats! ", self.username))))
-    def new_no(self, x):
-    	new = randint(0, 9)
-    	while new == self.x:
-    		new = randint(0, 9)
-    	self.x = new
-    	return self.x
+            self.canvas.itemconfig(self.greeting, text=("".join(("Congrats! ", self.username))))
+    def new_no(self, current_greeting):
+        """Display a Tkinter canvas.
+
+            Allows to choose a new encouragement from the list each time the button is clicked so that the encouragements are not repeated.
+
+            Attributes:
+            current_greeting: A flag attribute that stores the previous value of the encouragement index chosen so that it does not conflict with the new one.
+            Returns: A new generated index that is not repeated
+        """
+        new = randint(0, 9)
+        while new == self.current_greeting:        #get a new random integer if new is the same as current_greeting
+            new = randint(0, 9)        #get a random integer between 0-9
+        self.current_greeting = new
+        return self.current_greeting
 class StartGUI(object):
 
     """Class contains everything related to starting up the application as a new or returning user.
