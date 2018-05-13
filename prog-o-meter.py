@@ -19,7 +19,7 @@ try:
     import Tkinter as Tk        # Python < 3.0
 except ImportError:
     import tkinter as Tk        # Python >= 3.0
-from User import User
+from user import User
 
 class ProgressGUI(object):
     
@@ -47,8 +47,8 @@ class ProgressGUI(object):
         # Attributes
         self.root = Tk.Tk()
         self.user = user
-        self.username = user.getName()
-        (self.days, self.GOAL) = user.getProgress()
+        self.username = user.get_name()
+        (self.days, self.GOAL) = user.get_progress()
         self.rectangle_list = []
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining-1)
@@ -138,7 +138,7 @@ class ProgressGUI(object):
         Color will be diferent from current progress, to make the new day stand out.
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
         """
-        self.user.addDays(1)
+        self.user.add_days(1)
         self.days += 1
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining)
