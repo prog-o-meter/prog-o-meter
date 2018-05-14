@@ -175,6 +175,10 @@ class ProgressGUI(object):
         text_box.config(yscrollcommand=scroll_bar.set)
 
         def update_log():
+            """Updates the log with the text the user typed into the text widget.
+            
+            Calls update_log_file to save the text to the [USERNAME]_log.txt file.
+            """
             input_value = text_box.get("1.0",'end-1c')
             update_log_file(self.logname, input_value)
 
