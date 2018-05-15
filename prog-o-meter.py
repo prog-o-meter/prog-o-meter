@@ -33,7 +33,7 @@ class ProgressGUI(object):
         rectagle_list = a list of all rectangle elements to be displayed on canvas.
     """ 
     
-    def __init__(self, _days, _filename, _username):
+    def __init__(self, _days, _filename, _logname, _username):
         """Open a Tkinter window showing the prog-o-meter, a greeting text, and a button to add a new day to progress.
         
         Opens a Tkinter window showing the prog-o-meter belonging to the user with the provided username.
@@ -49,6 +49,7 @@ class ProgressGUI(object):
         self.root = Tk.Tk()
         self.filename = _filename
         self.username = _username
+        self.logname = _logname
         self.days = _days
         self.GOAL = 100
         self.rectangle_list = []
@@ -79,17 +80,22 @@ class ProgressGUI(object):
         self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = ("".join(("Hello ", self.username))))
         self.countdown_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
     def button_layout(self):
-        """Display a button with the text "1 more day!" on the canvas.
+        """Display a button with the text "1 more day!" and a button with the text "Log" on the canvas.
         
         Creates and display a button with the text "1 more day!" with the function add_day() as callback function. If user have already reached their goal, the button is displayed, but is disabled. 
+        Creates and displays a button with the text "Make log entry", with the function log_entry() as callback function.
        
         Attributes:
             add_day_button: A button with the text "1 more day!", which calls the function add_day
+            add_log_button: A button with the text "Make log entry", which calls the function log_entry
+            
         """
         self.add_day_button = Tk.Button(self.root, text = "1 more day!", command = self.add_day)
         self.add_day_button.pack()
         if self.days >= self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
+        self.add_log_button = Tk.Button(self.root, text="Make log entry", command = self.log_entry)
+        self.add_log_button.pack()
     def prog_o_meter(self):
         """Display a prog-o-meter on the canvas. 
         
@@ -146,9 +152,45 @@ class ProgressGUI(object):
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
         update_days_file(self.filename, self.days)
         self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
-        if self.days >=self.GOAL:        # Disable add_day_button and show congratulatory dialog if goal has been reached
-            self.add_day_button.config(state = "disabled")             
+        if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached 
+            self.add_day_button.config(state = "disabled")
             Congratulations()        # Open congratulations window with link to share on Twitter
+    def log_entry(self):
+        """Opens a new window for user to make a new log entry. The user can make any number of entries they wish.
+
+        Callback function to add_log_button. Opens a new toplevel window with a text widget and three buttons:
+        A button marked "Save" that saves the text the user typed into the widget to the [USERNAME]_log.txt file.
+        A button marked "Clear" that clears the text that the user typed into the widget.
+        A button marked "Close" that closes the toplevel window.
+        """
+        log_window = Tk.Toplevel(self.root)
+
+        log_window.title("Write your log entry here:")
+
+        scroll_bar = Tk.Scrollbar(log_window)         #A vertical scroll bar for user's convenience
+        text_box = Tk.Text(log_window, height=10, width=50)
+
+        scroll_bar.pack(side=Tk.RIGHT, fill=Tk.Y)
+        text_box.pack(fill=Tk.Y)
+
+        scroll_bar.config(command=text_box.yview)
+        text_box.config(yscrollcommand=scroll_bar.set)
+
+        def update_log():
+            """Updates the log with the text the user typed into the text widget.
+            
+            Calls update_log_file to save the text to the [USERNAME]_log.txt file.
+            """
+            input_value = text_box.get("1.0",'end-1c')
+            update_log_file(self.logname, input_value)
+
+        save = Tk.Button(log_window, height=1, width=10, text='Save', command=lambda: update_log())
+        clear = Tk.Button(log_window, height=1, width=10, text='Clear', command=lambda: text_box.delete('1.0', Tk.END))
+        close = Tk.Button(log_window, height=1, width=10, text='Close', command=lambda: log_window.destroy())
+
+        save.pack(side=Tk.LEFT, expand=True)
+        clear.pack(side=Tk.LEFT, expand=True)
+        close.pack(side=Tk.LEFT, expand=True)
 
 class StartGUI(object):
    
@@ -308,6 +350,23 @@ def read_days_file(_filename):
     days_text.close() 
     return days
 
+def update_log_file(_logname, _log_entry):
+    """ Updates the file [username]_log.txt, adding user's latest update.
+
+    The timestamp is added above the update, with a newline in between. A newline is also added after the update.
+    
+    Args: 
+        _logname: Name of the file to be updated. Should have format [username]_log.txt (username in all lowercase).
+        _log_entry: The text which is to be appended to the file.
+    """
+
+    log_text = open(_logname, "a")
+    log_text.write("\n"
+    + str(datetime.datetime.now()) + "\n"
+    "\n"
+    + str(_log_entry) + "\n")
+    log_text.close()
+
 def main():
     """Mainroutine to run the prog-o-meter program.
     
@@ -320,11 +379,13 @@ def main():
     name_screen = UsernameGUI(user_state)
     username = name_screen.get_name()
     filename = "".join((username.lower(), ".txt"))
+    logname = "".join((username.lower(), "_log.txt"))
     if user_state == 2:        #Make a new file for a new user, and set their current progress to 0 days
         update_days_file(filename, "0")
+        open(logname, 'w').close()        #Make a new log file for a new user
     days = read_days_file(filename)
     days = int(days)
-    ProgressGUI(days, filename, username)
+    ProgressGUI(days, filename, logname, username)
     
     
 if __name__ == '__main__':
