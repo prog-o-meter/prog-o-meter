@@ -17,8 +17,10 @@ import datetime
 from congratulations.Congratulations import Congratulations
 try:
     import Tkinter as Tk        # Python < 3.0
+    import tkMessageBox as mb
 except ImportError:
     import tkinter as Tk        # Python >= 3.0
+    from tkinter import messagebox as mb
 
 class ProgressGUI(object):
     
@@ -60,7 +62,13 @@ class ProgressGUI(object):
         self.button_layout()
         self.prog_o_meter()
         self.progress()
+        self.root.protocol("WM_DELETE_WINDOW",self.on_close)
         self.root.mainloop()
+
+    def on_close(self):
+        if mb.askokcancel("Quit?", "Do you really wish to quit?"):
+            quit()
+
     def canvas_layout(self):
         """Display a Tkinter canvas.
         
@@ -200,7 +208,7 @@ class StartGUI(object):
         root: a tkinter root.
         choice: The input from the user in the radiobuttons. 1 = returning user, 2 = new user
     """
-    
+
     def __init__(self):
         """Open a Tkinter window, greeting the user, and prompting the to input their status (new/returning user).
         
@@ -214,6 +222,7 @@ class StartGUI(object):
         # Tkinter instantiation
         self.canvas_layout()
         self.input_buttons()
+        self.root.protocol("WM_DELETE_WINDOW", lambda: quit())
         self.root.mainloop()
 
     def canvas_layout(self):
@@ -282,6 +291,7 @@ class UsernameGUI(object):
         # Tkinter instantiation
         self.canvas_layout()
         self.input_button()
+        self.root.protocol("WM_DELETE_WINDOW", lambda: quit())
         self.root.mainloop()
     def canvas_layout(self):
         """Display a Tkinter canvas.
