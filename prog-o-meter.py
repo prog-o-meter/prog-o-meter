@@ -34,11 +34,7 @@ class ProgressGUI(object):
         rectagle_list = a list of all rectangle elements to be displayed on canvas.
     """ 
     
-<<<<<<< HEAD
-    def __init__(self, user):
-=======
-    def __init__(self, _days, _filename, _logname, _username):
->>>>>>> master
+    def __init__(self, user, _logname):
         """Open a Tkinter window showing the prog-o-meter, a greeting text, and a button to add a new day to progress.
         
         Opens a Tkinter window showing the prog-o-meter belonging to the user with the provided username.
@@ -50,17 +46,10 @@ class ProgressGUI(object):
         """
         # Attributes
         self.root = Tk.Tk()
-<<<<<<< HEAD
         self.user = user
         self.username = user.get_name()
         (self.days, self.GOAL) = user.get_progress()
-=======
-        self.filename = _filename
-        self.username = _username
         self.logname = _logname
-        self.days = _days
-        self.GOAL = 100
->>>>>>> master
         self.rectangle_list = []
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining-1)
@@ -362,19 +351,9 @@ def main():
     user_state = start_screen.get_state()
     name_screen = UsernameGUI(user_state)
     username = name_screen.get_name()
-<<<<<<< HEAD
     user = User(username, user_state == 2)
-    ProgressGUI(user)
-=======
-    filename = "".join((username.lower(), ".txt"))
     logname = "".join((username.lower(), "_log.txt"))
-    if user_state == 2:        #Make a new file for a new user, and set their current progress to 0 days
-        update_days_file(filename, "0")
-        open(logname, 'w').close()        #Make a new log file for a new user
-    days = read_days_file(filename)
-    days = int(days)
-    ProgressGUI(days, filename, logname, username)
->>>>>>> master
+    ProgressGUI(user, logname)
     
     
 if __name__ == '__main__':
