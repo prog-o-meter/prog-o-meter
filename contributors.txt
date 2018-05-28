@@ -1,3 +1,5 @@
 CONTRIBUTORS:
 
-Linea
+[Maintainer] _Linea_ @lineaba
+Hey! My Name is Linea, and I am so excited about how many people wanna help out with the prog-o-meter project, which started as a silly little excercise I wrote one day, and then became an Open Source project, so that I could learn a bunch of stuff with other Open Source beginners. I'm an linguistic stundent, in my last year of my undergrad. I am from Denmark.
+
