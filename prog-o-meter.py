@@ -13,6 +13,7 @@ __authour__ = "Linea Brink Andersen"
 __version__ = "1.0.0"
 __license__ = "MIT"
 
+from random import randint
 import datetime
 from congratulations.Congratulations import Congratulations
 try:
@@ -22,9 +23,9 @@ except ImportError:
 from user import User
 
 class ProgressGUI(object):
-    
+
     """Class contains all things related to the window displaying the prog-o-meter, including text, buttons and actions linked to buttons.
-    
+
     Attributes:
         root: a tkinter root.
         user: an object representing the user
@@ -36,11 +37,11 @@ class ProgressGUI(object):
     
     def __init__(self, user, _logname):
         """Open a Tkinter window showing the prog-o-meter, a greeting text, and a button to add a new day to progress.
-        
+
         Opens a Tkinter window showing the prog-o-meter belonging to the user with the provided username.
         Window contains a greetings text, a count of days untill goal, and the graphical prog-o-meter.
-        Window contains a button, for user to add one new day to their progress. 
-        
+        Window contains a button, for user to add one new day to their progress.
+
         Args:
             user: an object representing the logged-in user
         """
@@ -51,9 +52,11 @@ class ProgressGUI(object):
         (self.days, self.GOAL) = user.get_progress()
         self.logname = _logname
         self.rectangle_list = []
+        self.encourage = ["Nice Job!", "The force is strong with you!", "Well Done!", "You are doing it!", "Never, never, never give up.", "If you dream it, you can do it.", "Everything you can imagine is real.", "Hope is a waking dream.", "You are the best!", "Always believe in yourself."]
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining-1)
-        # Tkinter instantiation 
+        self.current_greeting = 0
+        # Tkinter instantiation
         self.canvas_layout()
         self.button_layout()
         self.prog_o_meter()
@@ -61,22 +64,25 @@ class ProgressGUI(object):
         self.root.mainloop()
     def canvas_layout(self):
         """Display a Tkinter canvas.
-        
-        Creates a 1200x600 px canvas, with a greeting text, and a text stating how many days the user have left untill they reach the goal.  
-       
+
+        Creates a 1200x600 px canvas, with a greeting text, and a text stating how many days the user have left untill they reach the goal.
+
         Attributes:
             CANVAS_WIDTH: The width of the canvas is hardcoded to 1200 px.
             CANVAS_HEIGHT: The height of the canvas is hardcoded to 600 px.
             canvas: The Tkinter canvas widget.
-            countdown_text: A text element on the canvas, stating how many days the user have left before reaching their goal. 
+            countdown_text: A text element on the canvas, stating how many days the user have left before reaching their goal.
         """
         self.CANVAS_WIDTH = 1200
         self.CANVAS_HEIGHT = 600
         VERTICAL_TEXT_POSITION = 100
+        ENCOURAGEMENT_TEXT_POSITION = 400
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
-        self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = ("".join(("Hello ", self.username))))
+        self.greeting = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION, text = ("".join(("Hello ", self.username))))
         self.countdown_text = self.canvas.create_text(self.CANVAS_WIDTH/2, VERTICAL_TEXT_POSITION+40, justify = Tk.CENTER, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
+        self.encourage_text = self.canvas.create_text(self.CANVAS_WIDTH/2, ENCOURAGEMENT_TEXT_POSITION+40, justify = Tk.CENTER, text = "")
+
     def button_layout(self):
         """Display a button with the text "1 more day!" and a button with the text "Log" on the canvas.
         
@@ -92,12 +98,13 @@ class ProgressGUI(object):
         self.add_day_button.pack()
         if self.days >= self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
+            self.canvas.itemconfig(self.greeting, text=("".join(("Congrats! ", self.username))))
         self.add_log_button = Tk.Button(self.root, text="Make log entry", command = self.log_entry)
         self.add_log_button.pack()
     def prog_o_meter(self):
-        """Display a prog-o-meter on the canvas. 
-        
-        Displays a progess-o-meter made of white rectangles. There will be one rectangle pr. day in goal. Rectangles will be displayed right up against each other, making them appear as one long rectangles, with horizontal lines sectioning it. 
+        """Display a prog-o-meter on the canvas.
+
+        Displays a progess-o-meter made of white rectangles. There will be one rectangle pr. day in goal. Rectangles will be displayed right up against each other, making them appear as one long rectangles, with horizontal lines sectioning it.
         There will be 50 pixels from left edge of window to first rectangle in prog-o-meter, and 50 pixels from last rectangle to right edge of window.
         Rectangles will be 20 pixels high, and their width will be the CANVAS_WIDTH, minus 100 pixels (distance from right+left edge of window to ends of prog-o-meter) divided by number of days in goal.
         """
@@ -108,16 +115,16 @@ class ProgressGUI(object):
         for i in range(self.GOAL):        # Create a rectangle for each day and add it to the rectangle_list
             rectangle = self.canvas.create_rectangle(LEFT_BOUNDARY, self.CANVAS_HEIGHT/2, LEFT_BOUNDARY+RECTANGLE_WIDENESS, (self.CANVAS_HEIGHT/2)+RECTANGLE_HEIGHT, fill = "white")
             self.rectangle_list.append(rectangle)
-            LEFT_BOUNDARY += RECTANGLE_WIDENESS 
+            LEFT_BOUNDARY += RECTANGLE_WIDENESS
     def progress(self):
         """Fill in rectangles in prog-o-meter, to represent the current progress of user.
-        
+
         Fills in rectangles in prog-o-meter to represent the current progress of user, from left to right.
         Completed days will be filled out with a solid color (currently hardcoded to be blue).
         Remaining days will remain white.
         """
         for i in range(self.days):        # Color a rectangle pr. completed day blue (from left to right)
-            self.canvas.itemconfig(self.rectangle_list[i], fill = "blue") 
+            self.canvas.itemconfig(self.rectangle_list[i], fill = "blue")
     def get_completion_date(self, days_remaining):
         """Calculate the date at which the challenge will be over.
 
@@ -127,7 +134,7 @@ class ProgressGUI(object):
         Returns:
             The project completion date as a string
         """
-        
+
         today = datetime.date.today()
         completion_date = today + datetime.timedelta(days=days_remaining)
 
@@ -139,7 +146,7 @@ class ProgressGUI(object):
         return datetime.date.strftime(completion_date, "%B %d{0}, %Y".format(suffix))
     def add_day(self):
         """Fill out one more rectangle in prog-o-meter with color, to represent one more day completed.
-        
+
         Callback function to add_day_button. Fills out one more rectangle (most left-ward white rectangle) with color, to represent another day completed.
         Color will be diferent from current progress, to make the new day stand out.
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
@@ -149,10 +156,25 @@ class ProgressGUI(object):
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining)
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
+        self.canvas.itemconfig(self.encourage_text, text = "".join(self.encourage[self.new_no(self.current_greeting)]))
         self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
-        if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached 
+        if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
+            self.canvas.itemconfig(self.greeting, text=("".join(("Congrats! ", self.username))))
             Congratulations()        # Open congratulations window with link to share on Twitter
+    
+    def new_no(self, current_greeting):
+        """Allows to choose a new encouragement from the list each time the button is clicked so that the encouragements are not repeated.
+            Attributes:
+            current_greeting: A flag attribute that stores the previous value of the encouragement index chosen so that it does not conflict with the new one.
+            Returns: A new generated index that is not repeated
+        """
+        new = randint(0, 9)        #get a random integer between 0-9
+        while new == self.current_greeting:        #get a new random integer if new is the same as current_greeting
+            new = randint(0, 9)        #get a new random integer between 0-9
+        self.current_greeting = new
+        return self.current_greeting
+    
     def log_entry(self):
         """Opens a new window for user to make a new log entry. The user can make any number of entries they wish.
 
@@ -189,19 +211,19 @@ class ProgressGUI(object):
         save.pack(side=Tk.LEFT, expand=True)
         clear.pack(side=Tk.LEFT, expand=True)
         close.pack(side=Tk.LEFT, expand=True)
-
+        
 class StartGUI(object):
-   
-    """Class contains everything related to starting up the application as a new or returning user. 
-    
+
+    """Class contains everything related to starting up the application as a new or returning user.
+
     Attributes:
         root: a tkinter root.
         choice: The input from the user in the radiobuttons. 1 = returning user, 2 = new user
     """
-    
+
     def __init__(self):
         """Open a Tkinter window, greeting the user, and prompting the to input their status (new/returning user).
-        
+
         Opens a Tkinter window to determine the status of the user (new/returning).
         Window contains a greetings text, and two radiobuttons for user input (choice: new/returning user).
         Window contains a submit button, for user to click when status have been set using radio-buttons.
@@ -216,16 +238,16 @@ class StartGUI(object):
 
     def canvas_layout(self):
         """Display a Tkinter canvas.
-        
+
         Creates a 300x50 px canvas with a greeting text.
-       
+
         Attributes:
             CANVAS_WIDTH: The width of the canvas is hardcoded to 300 px.
             CANVAS_HEIGHT: The height of the canvas is hardcoded to 50 px.
             canvas: The Tkinter canvas widget.
         """
         self.CANVAS_WIDTH = 300
-        self.CANVAS_HEIGHT = 50 
+        self.CANVAS_HEIGHT = 50
         VERTICAL_TEXT_POSITION = 20
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
@@ -233,14 +255,14 @@ class StartGUI(object):
 
     def input_buttons(self):
         """Display the buttons on the canvas.
-        
+
         Displays a set of two radio buttons, for the user to indicate whether they are a new
         or returning user. Window closes when user clicks one of the buttons.
 
         Attributes:
             BTTN_WIDTH: The width of the radiobuttons is hardcoded to 18 text units.
         """
-        BTTN_WIDTH = 18 
+        BTTN_WIDTH = 18
         Tk.Radiobutton(self.root, text = "I already have a meter", variable = self.choice, value = 1, command = self.close_window, indicatoron = 0, width = BTTN_WIDTH).pack(pady = 5)
         Tk.Radiobutton(self.root, text = "I don't have a meter yet", variable = self.choice, value = 2, command = self.close_window, indicatoron = 0, width = BTTN_WIDTH).pack(pady = 5)
     def close_window(self):
@@ -248,24 +270,24 @@ class StartGUI(object):
         self.root.destroy()
     def get_state(self):
         """Return the user's choice from radio-buttons.
-        
+
         Returns:
             IntVar (1 for returning user, 2 for new user).
         """
         return self.choice.get()
-    
+
 class UsernameGUI(object):
-    
+
     """Class contains everything related to the user providing their name, either to create a new prog-o-meter, or to retrieve a saved one.
-    
+
     Attributes:
         root: a tkinter root.
         user_type: 1 = returning user, 2 = new user
     """
-    
+
     def __init__(self, _user_type):
         """Open a Tkinter window, greeting the user, and prompting the to input their username.
-        
+
         Opens a Tkinter window for the user to input their name.
         Window contains a greeting+instruction text, and a entry field (text field) where the user types their name.
         Window contains a submit button, for user to click when they have typed their name.
@@ -283,9 +305,9 @@ class UsernameGUI(object):
         self.root.mainloop()
     def canvas_layout(self):
         """Display a Tkinter canvas.
-        
+
         Creates a 300x50 px canvas with a greeting text and an entry widget (input field for text).
-       
+
         Attributes:
             CANVAS_WIDTH: The width of the canvas is hardcoded to 300 px.
             CANVAS_HEIGHT: The height of the canvas is hardcoded to 50 px.
@@ -293,7 +315,7 @@ class UsernameGUI(object):
             text_entry: A Tkinter text-entry widget (input field for text)
         """
         self.CANVAS_WIDTH = 300
-        self.CANVAS_HEIGHT = 50 
+        self.CANVAS_HEIGHT = 50
         self.canvas = Tk.Canvas(self.root, width = self.CANVAS_WIDTH, height = self.CANVAS_HEIGHT)
         self.canvas.pack()
         self.text_entry = Tk.Entry(self.root)
@@ -305,10 +327,10 @@ class UsernameGUI(object):
             self.canvas.create_text(self.CANVAS_WIDTH/2, 20, text = "Lets get you started! Please enter your name")
     def input_button(self):
         """Display the inout button on the canvas.
-        
+
         Displays a submit button, for user to click when they have typed in their name.
         When button is clicked, it stores the input name as username, and then closes the Tkinter window.
-        
+
         Attributes:
             submit_button: Button with the text "Submit", which calls the function save_and_close
         """
@@ -342,7 +364,7 @@ def update_log_file(_logname, _log_entry):
 
 def main():
     """Mainroutine to run the prog-o-meter program.
-    
+
     Opens a window, which lets the user choose if they are a new or returning user.
     Opens a new window, which lets the user type their name.
     Opens a new window, which shows the user's progress, and how many days remains of the challenge.
@@ -354,8 +376,7 @@ def main():
     user = User(username, user_state == 2)
     logname = "".join((username.lower(), "_log.txt"))
     ProgressGUI(user, logname)
-    
-    
+
+
 if __name__ == '__main__':
     main()
-   
