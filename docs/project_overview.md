@@ -11,6 +11,7 @@ to check out the files themselves and read the docstrings.
 
 Used for management of the Git repository. It specifies which files should not be uploaded
 to the repository when you make your Git commits.
+NOTE: This file tells git what to ignore, and as a contributor you do not need to worry about it, git will make sure the right things are ignored. 
 
 `CODE_OF_CONDUCT.md`
 
@@ -19,6 +20,7 @@ A code that all contributors to the project are expected to abide by.
 `CONTRIBUTING.md`
 
 Information for contributors to the project.
+This is a good place for new contributors to start, and learn how to contribute to the prog-o-meter
 
 `contributors.txt`
 
