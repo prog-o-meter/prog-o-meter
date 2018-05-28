@@ -7,6 +7,9 @@ Currently, the prog-o-meter only let's you track your progress in days, but ther
 
 ![prog-o-meter screenshot](https://user-images.githubusercontent.com/32916783/39079746-ba68340e-44d5-11e8-9665-95520b3b8ca8.JPG)
 
+## Use the Prog-o-meter
+The prog-o-meter is available for anyone to use. Check out [this guide](user_guide.md) on how to download the program, and get started.
+
 ## Get involved
 The prog-o-meter was started as a project for me to work on during a #100DaysofCode challenge.
 I had been looking for an open-source project to contribute to, to get more experience with collaboration and git/github, but I found none that seemed right for me, and honestly, many of them looked too intimidating for me to even know where to start.
@@ -18,7 +21,7 @@ If you feel just as overwhelmed as I did, when I was looking for open-source pro
 To learn more about how to contribute, [check this out](CONTRIBUTING.md)
 
 ## Tech
-The current version of the prog-o-meter is built in Python 2.7 and the GUI (graphical user interface) is created with Tkinter. You will probably need a little experience with Python before you can start contributing, but please do not feel that you have to be a master. None of us are masters, and anything you have to contribute __IS VALUABLE__. Of course we want the prog-o-meter to be awesome, but more than anything, we want to have fun and help each other learn, and we need a diverse team to do that. 
+The current version of the prog-o-meter is built in Python 3.4 and the GUI (graphical user interface) is created with Tkinter. You will probably need a little experience with Python before you can start contributing, but please do not feel that you have to be a master. None of us are masters, and anything you have to contribute __IS VALUABLE__. Of course we want the prog-o-meter to be awesome, but more than anything, we want to have fun and help each other learn, and we need a diverse team to do that. 
 
 ## How to open an issue
 1. Right below the blue words lineaba/prog-o-meter, there is a menu line. Select the tab __Issues__ 

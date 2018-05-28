@@ -15,10 +15,12 @@ __license__ = "MIT"
 
 from random import randint
 import datetime
+from congratulations.Congratulations import Congratulations
 try:
     import Tkinter as Tk        # Python < 3.0
 except ImportError:
     import tkinter as Tk        # Python >= 3.0
+from user import User
 
 class ProgressGUI(object):
 
@@ -26,14 +28,14 @@ class ProgressGUI(object):
 
     Attributes:
         root: a tkinter root.
-        filename: the name of the .txt file storing the user's number of days.
+        user: an object representing the user
         username: the name of the user.
         days: the number of days the user have completed.
         GOAL: The number of days the user is trying to complete (hardcoded to be 100, but might wanna add feature for user to chooses this themselves in the future).
         rectagle_list = a list of all rectangle elements to be displayed on canvas.
-    """
-
-    def __init__(self, _days, _filename, _username):
+    """ 
+    
+    def __init__(self, user, _logname):
         """Open a Tkinter window showing the prog-o-meter, a greeting text, and a button to add a new day to progress.
 
         Opens a Tkinter window showing the prog-o-meter belonging to the user with the provided username.
@@ -41,16 +43,14 @@ class ProgressGUI(object):
         Window contains a button, for user to add one new day to their progress.
 
         Args:
-            _days: number of days currently completed by the user
-            _filename: name of file storing user's progress
-            _username: name of user
+            user: an object representing the logged-in user
         """
         # Attributes
         self.root = Tk.Tk()
-        self.filename = _filename
-        self.username = _username
-        self.days = _days
-        self.GOAL = 100
+        self.user = user
+        self.username = user.get_name()
+        (self.days, self.GOAL) = user.get_progress()
+        self.logname = _logname
         self.rectangle_list = []
         self.encourage = ["Nice Job!", "The force is strong with you!", "Well Done!", "You are doing it!", "Never, never, never give up.", "If you dream it, you can do it.", "Everything you can imagine is real.", "Hope is a waking dream.", "You are the best!", "Always believe in yourself."]
         self.days_remaining = self.GOAL - self.days
@@ -84,19 +84,23 @@ class ProgressGUI(object):
         self.encourage_text = self.canvas.create_text(self.CANVAS_WIDTH/2, ENCOURAGEMENT_TEXT_POSITION+40, justify = Tk.CENTER, text = "")
 
     def button_layout(self):
-        """Display a button with the text "1 more day!" on the canvas.
-
-        Creates and display a button with the text "1 more day!" with the function add_day() as callback function. If user have already reached their goal, the button is displayed, but is disabled.
-
+        """Display a button with the text "1 more day!" and a button with the text "Log" on the canvas.
+        
+        Creates and display a button with the text "1 more day!" with the function add_day() as callback function. If user have already reached their goal, the button is displayed, but is disabled. 
+        Creates and displays a button with the text "Make log entry", with the function log_entry() as callback function.
+       
         Attributes:
             add_day_button: A button with the text "1 more day!", which calls the function add_day
+            add_log_button: A button with the text "Make log entry", which calls the function log_entry
+            
         """
         self.add_day_button = Tk.Button(self.root, text = "1 more day!", command = self.add_day)
         self.add_day_button.pack()
         if self.days >= self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
             self.canvas.itemconfig(self.greeting, text=("".join(("Congrats! ", self.username))))
-
+        self.add_log_button = Tk.Button(self.root, text="Make log entry", command = self.log_entry)
+        self.add_log_button.pack()
     def prog_o_meter(self):
         """Display a prog-o-meter on the canvas.
 
@@ -147,19 +151,20 @@ class ProgressGUI(object):
         Color will be diferent from current progress, to make the new day stand out.
         (Currently the new-day color is hardcoded to be green, but in the future, user should be able to change this themselves).
         """
+        self.user.add_days(1)
         self.days += 1
         self.days_remaining = self.GOAL - self.days
         self.completion_date = self.get_completion_date(self.days_remaining)
         self.canvas.itemconfig(self.rectangle_list[self.days-1], fill = "green")
         self.canvas.itemconfig(self.encourage_text, text = "".join(self.encourage[self.new_no(self.current_greeting)]))
-        update_days_file(self.filename, self.days)
         self.canvas.itemconfig(self.countdown_text, text = "".join(("You have ", str(self.days_remaining), " days left!\n\n", "If you code everyday, you will be done with this project on ", self.completion_date)))
         if self.days >=self.GOAL:        # Disable add_day_button if goal have been reached
             self.add_day_button.config(state = "disabled")
             self.canvas.itemconfig(self.greeting, text=("".join(("Congrats! ", self.username))))
+            Congratulations()        # Open congratulations window with link to share on Twitter
+    
     def new_no(self, current_greeting):
         """Allows to choose a new encouragement from the list each time the button is clicked so that the encouragements are not repeated.
-
             Attributes:
             current_greeting: A flag attribute that stores the previous value of the encouragement index chosen so that it does not conflict with the new one.
             Returns: A new generated index that is not repeated
@@ -169,6 +174,44 @@ class ProgressGUI(object):
             new = randint(0, 9)        #get a new random integer between 0-9
         self.current_greeting = new
         return self.current_greeting
+    
+    def log_entry(self):
+        """Opens a new window for user to make a new log entry. The user can make any number of entries they wish.
+
+        Callback function to add_log_button. Opens a new toplevel window with a text widget and three buttons:
+        A button marked "Save" that saves the text the user typed into the widget to the [USERNAME]_log.txt file.
+        A button marked "Clear" that clears the text that the user typed into the widget.
+        A button marked "Close" that closes the toplevel window.
+        """
+        log_window = Tk.Toplevel(self.root)
+
+        log_window.title("Write your log entry here:")
+
+        scroll_bar = Tk.Scrollbar(log_window)         #A vertical scroll bar for user's convenience
+        text_box = Tk.Text(log_window, height=10, width=50)
+
+        scroll_bar.pack(side=Tk.RIGHT, fill=Tk.Y)
+        text_box.pack(fill=Tk.Y)
+
+        scroll_bar.config(command=text_box.yview)
+        text_box.config(yscrollcommand=scroll_bar.set)
+
+        def update_log():
+            """Updates the log with the text the user typed into the text widget.
+            
+            Calls update_log_file to save the text to the [USERNAME]_log.txt file.
+            """
+            input_value = text_box.get("1.0",'end-1c')
+            update_log_file(self.logname, input_value)
+
+        save = Tk.Button(log_window, height=1, width=10, text='Save', command=lambda: update_log())
+        clear = Tk.Button(log_window, height=1, width=10, text='Clear', command=lambda: text_box.delete('1.0', Tk.END))
+        close = Tk.Button(log_window, height=1, width=10, text='Close', command=lambda: log_window.destroy())
+
+        save.pack(side=Tk.LEFT, expand=True)
+        clear.pack(side=Tk.LEFT, expand=True)
+        close.pack(side=Tk.LEFT, expand=True)
+        
 class StartGUI(object):
 
     """Class contains everything related to starting up the application as a new or returning user.
@@ -302,30 +345,22 @@ class UsernameGUI(object):
         """Return the username. """
         return self.username
 
-def update_days_file(_filename, _days):
-    """Update the file [username].txt, with the current number of days completed.
+def update_log_file(_logname, _log_entry):
+    """ Updates the file [username]_log.txt, adding user's latest update.
 
-    Args:
-        _filename: Name of the file to be updated. Should have format [username].txt (username in all lowercase).
-        _days: the current number of days completed
+    The timestamp is added above the update, with a newline in between. A newline is also added after the update.
+    
+    Args: 
+        _logname: Name of the file to be updated. Should have format [username]_log.txt (username in all lowercase).
+        _log_entry: The text which is to be appended to the file.
     """
-    days_text = open(_filename, "w")
-    days_text.write(str(_days))
-    days_text.close()
 
-def read_days_file(_filename):
-    """Read the file [username].txt, to retrieve the number of days completed, from last use.
-
-    Args:
-        _filename: Name of the file to be read. Should have format [username].txt (username in all lowercase).
-
-    Returns:
-        Number of days completed
-    """
-    days_text = open(_filename, "r")
-    days = days_text.read()
-    days_text.close()
-    return days
+    log_text = open(_logname, "a")
+    log_text.write("\n"
+    + str(datetime.datetime.now()) + "\n"
+    "\n"
+    + str(_log_entry) + "\n")
+    log_text.close()
 
 def main():
     """Mainroutine to run the prog-o-meter program.
@@ -338,12 +373,9 @@ def main():
     user_state = start_screen.get_state()
     name_screen = UsernameGUI(user_state)
     username = name_screen.get_name()
-    filename = "".join((username.lower(), ".txt"))
-    if user_state == 2:        #Make a new file for a new user, and set their current progress to 0 days
-        update_days_file(filename, "0")
-    days = read_days_file(filename)
-    days = int(days)
-    ProgressGUI(days, filename, username)
+    user = User(username, user_state == 2)
+    logname = "".join((username.lower(), "_log.txt"))
+    ProgressGUI(user, logname)
 
 
 if __name__ == '__main__':
