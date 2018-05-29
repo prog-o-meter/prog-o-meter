@@ -29,8 +29,8 @@ class User(object):
         """Constructor for the User object.
 
         Args:
-            display_name (str) -- User's display name (default None)
-            new_user (bool) -- Flag indicating whether or not to
+            display_name (str): User's display name (default None)
+            new_user (bool): Flag indicating whether or not to
             create a new file (default False)
          """
         self.display_name = display_name
@@ -49,7 +49,7 @@ class User(object):
         """Add completed days to the user's progress and write to file.
 
         Args:
-            days -- # of days to add (default 1)
+            days: # of days to add (default 1)
         """
         self.completed_days += days
 
@@ -66,7 +66,7 @@ class User(object):
         This method is an alias for calling .add_days with a negative value.
 
         Args:
-            days -- Number of days to remove from the current count (default 1)
+            days: Number of days to remove from the current count (default 1)
         """
         return self.add_days(days * -1)
 
@@ -74,7 +74,7 @@ class User(object):
         """Setter for the user's display name.
 
         Args:
-            name -- New display name
+            name: New display name
         """
         self.display_name = name
 
@@ -92,7 +92,7 @@ class User(object):
         """Setter for the # of days in the user's goal.
 
         Args:
-            new_goal -- Total number of days the user is working toward
+            new_goal: Total number of days the user is working toward
         """
         # Check that the new goal is an integer here, otherwise it could cause
         # problems down the line that are harder to debug
@@ -110,7 +110,7 @@ class User(object):
         """Append a goal to the part_goals list
 
         Args:
-            goal -- A part goal
+            goal: A part goal
         """
         self.part_goals.append(goal)
 
