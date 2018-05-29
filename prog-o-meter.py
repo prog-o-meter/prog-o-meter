@@ -61,12 +61,9 @@ class ProgressGUI(object):
         self.button_layout()
         self.prog_o_meter()
         self.progress()
-        self.root.protocol("WM_DELETE_WINDOW",self.on_close)
+        self.root.protocol("WM_DELETE_WINDOW",lambda: quit())
         self.root.mainloop()
 
-    def on_close(self):
-        if mb.askokcancel("Quit?", "Do you really wish to quit?"):
-            quit()
 
     def canvas_layout(self):
         """Display a Tkinter canvas.
