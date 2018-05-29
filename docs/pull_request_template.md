@@ -15,3 +15,4 @@ This lets us know more about our contributors, and what we can do to make it eas
 Please submit your answer [here](https://docs.google.com/forms/d/e/1FAIpQLSdQqs9shjcyJTTqbkKjGv85Irxxaljvw0H357zuyrRwXq9_nA/viewform?usp=sf_link) and put an 'x' in the box below._
 
 - [ ] It is my first pull request to prog-o-meter, and I have answered the survey
+- [ ] This is not my first contribution to the prog-o-meter
