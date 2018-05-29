@@ -61,7 +61,10 @@ class ProgressGUI(object):
         self.button_layout()
         self.prog_o_meter()
         self.progress()
+        self.root.protocol("WM_DELETE_WINDOW",lambda: quit())
         self.root.mainloop()
+
+
     def canvas_layout(self):
         """Display a Tkinter canvas.
 
@@ -234,6 +237,7 @@ class StartGUI(object):
         # Tkinter instantiation
         self.canvas_layout()
         self.input_buttons()
+        self.root.protocol("WM_DELETE_WINDOW", lambda: quit())
         self.root.mainloop()
 
     def canvas_layout(self):
@@ -302,6 +306,7 @@ class UsernameGUI(object):
         # Tkinter instantiation
         self.canvas_layout()
         self.input_button()
+        self.root.protocol("WM_DELETE_WINDOW", lambda: quit())
         self.root.mainloop()
     def canvas_layout(self):
         """Display a Tkinter canvas.
