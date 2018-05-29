@@ -18,10 +18,8 @@ import datetime
 from congratulations.Congratulations import Congratulations
 try:
     import Tkinter as Tk        # Python < 3.0
-    import tkMessageBox as mb
 except ImportError:
     import tkinter as Tk        # Python >= 3.0
-    from tkinter import messagebox as mb
 from user import User
 
 class ProgressGUI(object):
