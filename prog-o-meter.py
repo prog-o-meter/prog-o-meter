@@ -47,6 +47,7 @@ class ProgressGUI(object):
         """
         # Attributes
         self.root = Tk.Tk()
+        self.root.title("Progress")
         self.user = user
         self.username = user.get_name()
         (self.days, self.GOAL) = user.get_progress()
@@ -233,6 +234,7 @@ class StartGUI(object):
         """
         # Attributes
         self.root = Tk.Tk()
+        self.root.title("Welcome!")
         self.choice = Tk.IntVar()
         # Tkinter instantiation
         self.canvas_layout()
@@ -301,6 +303,7 @@ class UsernameGUI(object):
         """
         # Attributes
         self.root = Tk.Tk()
+        self.root.title("Login")
         self.username = ""
         self.user_type = _user_type
         # Tkinter instantiation
