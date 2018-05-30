@@ -12,7 +12,7 @@ to check out the files themselves and read the docstrings.
 Used for management of the Git repository. It specifies which files should not be uploaded
 to the repository when you make your Git commits.
 
-This file tells git what to ignore, and as a contributor you do not need to worry about it. Git will make sure the right things are ignored. 
+This file tells git what to ignore, and as a contributor you do not need to worry about it. Git will make sure the right things are ignored.
 
 `CODE_OF_CONDUCT.md`
 
@@ -45,6 +45,16 @@ not located in this file. If you want to edit the congratulations dialog, you wi
 `README.md`
 
 An introduction to the prog-o-meter project.
+
+`user.py`
+
+This module contains the `User` class, which represents a prog-o-meter user. Associated with users are
+a name, a goal, zero or more "part goals", and a certain amount of progress toward their goals. Users
+can add to (or remove from) their progress, and they can add new part goals. The `User` class handles
+all of these actions, including saving the updated progress to disk. In most cases, unless you are
+specifically working with the way in which prog-o-meter stores its data, you will not need to concern
+yourself with these things. Simply call the `add_days()` method on your user object, and the data
+will be saved automatically.
 
 `user_guide.md`
 
