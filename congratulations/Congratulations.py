@@ -33,13 +33,32 @@ class Congratulations(object):
         anchor=Tk.CENTER, justify=Tk.CENTER, wraplength=CANVAS_WIDTH-20, padx=10)
         lbl.place(relx=0.0, rely=0.33)
 
+        share_lbl = Tk.Label(self.root, text="Share on:")
+        share_lbl.pack(side=Tk.LEFT)
         # Social media button
-        btn_fb = Tk.Button(self.root, text="Share on Twitter!", compound=Tk.LEFT, command=self.open_twitter_browser)
-        btn_fb.pack()
+        twitter_btn = Tk.Button(self.root, text="Twitter", command=self.open_twitter_browser)
+        vk_btn = Tk.Button(self.root, text="Vkontakte", command=self.open_vk_browser)
+        facebook_btn = Tk.Button(self.root, text="Facebook", command=self.open_facebook_browser)
+
+        twitter_btn.pack(side=Tk.RIGHT)
+        facebook_btn.pack(side=Tk.RIGHT)
+        vk_btn.pack(side=Tk.RIGHT)
 
         # Tkinter instantiation
         self.root.mainloop()
     
+    def open_facebook_browser(self):
+        msg = quote("I just completed my " + str(self.challenge_duration) + "-days challenge! "+ self.challenge_hashtag)
+        print(self.challenge_hashtag)
+        print(msg)
+        webbrowser.open_new_tab("https://www.facebook.com/sharer/sharer.php?u=https://github.com/prog-o-meter/prog-o-meter&quote=" + msg)
+
+    def open_vk_browser(self):
+        msg = quote("I just completed my " + str(self.challenge_duration) + "-days challenge! "+ self.challenge_hashtag)
+        print(self.challenge_hashtag)
+        print(msg)
+        webbrowser.open_new_tab("https://vk.com/share.php?comment=" + msg)
+
     def open_twitter_browser(self):
         """Opens a new browser tab to the Twitter page for creating a tweet.
 
