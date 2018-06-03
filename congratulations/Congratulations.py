@@ -24,7 +24,7 @@ class Congratulations(object):
         self.challenge_hashtag = "#100DaysOfCode"
 
         CANVAS_WIDTH = 300
-        CANVAS_HEIGHT = 200
+        CANVAS_HEIGHT = 250
         self.canvas = Tk.Canvas(self.root, width = CANVAS_WIDTH, height = CANVAS_HEIGHT)
         self.canvas.pack()
 
@@ -33,10 +33,11 @@ class Congratulations(object):
         anchor=Tk.CENTER, justify=Tk.CENTER, wraplength=CANVAS_WIDTH-20, padx=10)
         lbl.place(relx=0.0, rely=0.33)
 
-        # Social media button
-        btn_fb = Tk.Button(self.root, text="Share on Twitter!", compound=Tk.LEFT, command=self.open_twitter_browser)
-        btn_fb.pack()
-
+        # Social media button,added the "NO Thanks" Button 
+        BTTN_WIDTH = 12
+        btn_fb = Tk.Button(self.root, text="Share on Twitter!", compound=Tk.LEFT, command=self.open_twitter_browser, width=BTTN_WIDTH).pack(pady = 5)
+        btn_quit = Tk.Button(self.root, text="No Thanks", compound=Tk.LEFT, command=self.close_Window, width=BTTN_WIDTH).pack(pady = 5)
+       
         # Tkinter instantiation
         self.root.mainloop()
     
@@ -49,3 +50,8 @@ class Congratulations(object):
         print(self.challenge_hashtag)
         print(msg)
         webbrowser.open_new_tab("https://twitter.com/intent/tweet?text=" + msg)
+
+    def close_Window(self):
+        """Closes the celebratory window."""
+        self.root.destroy() 
+
