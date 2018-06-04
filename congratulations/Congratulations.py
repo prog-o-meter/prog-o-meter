@@ -8,7 +8,7 @@ except ImportError:
 class Congratulations(object):
     """Displays a dialog congratulating the user for completing the challenge.
 
-    Allows the user to tweet about their accomplishment.
+    Allows the user to share their accomplishment on various social media platforms [Twitter, Vkontakte, Facebook].
 
     TO DO:
         Allow the user to start up a new goal.    
@@ -34,22 +34,14 @@ class Congratulations(object):
         anchor=Tk.CENTER, justify=Tk.CENTER, wraplength=CANVAS_WIDTH-20, padx=10)
         lbl.place(relx=0.0, rely=0.15)
         
-        share_lbl = Tk.Label(self.root, text="Share on:")
-        share_lbl.place(relx=0.33, rely=0.55)
+        share_lbl = Tk.Label(self.root, text="Share on:", anchor=Tk.CENTER, justify=Tk.CENTER, wraplength=CANVAS_WIDTH-20, padx=125)
+        share_lbl.place(relx=0.0, rely=0.55)
         
         # Social media button + "NO Thanks" Button
-        twitter_btn = Tk.Button(self.root, text="Twitter", command=self.open_twitter_browser)
-        vk_btn = Tk.Button(self.root, text="Vkontakte", command=self.open_vk_browser)
-        facebook_btn = Tk.Button(self.root, text="Facebook", command=self.open_facebook_browser)
+        twitter_btn = Tk.Button(self.root, text="Twitter", command=self.open_twitter_browser, width=BTTN_WIDTH).pack(pady = 5)
+        vk_btn = Tk.Button(self.root, text="Vkontakte", command=self.open_vk_browser, width=BTTN_WIDTH).pack(pady = 5)
+        facebook_btn = Tk.Button(self.root, text="Facebook", command=self.open_facebook_browser, width=BTTN_WIDTH).pack(pady = 5)
         btn_quit = Tk.Button(self.root, text="No Thanks", compound=Tk.LEFT, command=self.close_Window, width=BTTN_WIDTH).pack(pady = 5)
-        
-        #configuring and placing buttons
-        twitter_btn.config(width=11)
-        facebook_btn.config(width=11)
-        vk_btn.config(width=11)
-        twitter_btn.place(relx=0.25, rely=0.63)
-        facebook_btn.place(relx=0.25, rely=0.74)
-        vk_btn.place(relx=0.25, rely=0.85)
 
         # Tkinter instantiation
         self.root.mainloop()
